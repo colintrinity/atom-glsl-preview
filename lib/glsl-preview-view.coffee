@@ -8,6 +8,14 @@ fs = require 'fs-plus'
 StatusView = require './status-view'
 BindingsView = require './bindings-view'
 
+{MessagePanelView, LineMessageView} = require 'atom-message-panel'
+messages = new MessagePanelView
+    title: 'Remember your Coffee!'
+
+messages.attach()
+
+messages.add new LineMessageView
+    message: 'You haven\'t had a single drop of coffee since this character'
 ###
 http://stackoverflow.com/questions/18663941/finding-closest-element-without-jquery
 ###
@@ -346,14 +354,16 @@ class GlslPreviewView extends ScrollView
 		# console.log 'error', error
 
 		if atom.config.get 'glsl-preview.showErrorMessage'
-			@modalPanel.show()
-			@statusView.update "[glsl-preview] <span class='error'>#{error}</span>"
+			errorMessages = error.split(/\n/)
+			for errorMessage in errorMessages
+				errorMessage && messages.add new LineMessageView
+					message: errorMessage
 
 	hideError: (result) ->
 		@_getActiveTab().removeClass('shader-compile-error')
 
-		@modalPanel.hide()
-		@statusView.update ""
+		# @modalPanel.hide()
+		# @statusView.update ""
 
 	showLoading: ->
 		@loading = true

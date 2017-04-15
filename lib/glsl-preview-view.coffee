@@ -10,7 +10,7 @@ BindingsView = require './bindings-view'
 
 {MessagePanelView, LineMessageView} = require 'atom-message-panel'
 messages = new MessagePanelView
-    title: 'Remember your Coffee!'
+    title: 'GLSL Error Info'
 
 messages.attach()
 
